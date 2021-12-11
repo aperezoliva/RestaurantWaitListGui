@@ -1,0 +1,48 @@
+﻿<Window x:Class="RestaurantWaitListGui.WaitListGui"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantWaitListGui"
+        mc:Ignorable="d" FontSize="14" FontFamily="Segoe UI Light"
+        Title="Waitlist Application" Height="450" Width="800">
+    <Grid Background="Beige" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <ListView Name="custList" Grid.Column="4" Grid.Row="4" Visibility="Collapsed">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="Customers: "/>
+                        <TextBlock Text="{Binding}" FontWeight="Bold"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Name="btnOpen" Content="Open Restaurant Des Fleurs" Grid.Column="4" Grid.Row ="4" VerticalAlignment="Top" HorizontalAlignment="Center" Height="50" Click="openButton_Click" />
+        <Button Name="btnClose" Content="Close Restaurant Des Fleurs" Grid.Column="4" Grid.Row ="4" VerticalAlignment="Bottom" HorizontalAlignment="Center" Height="50"  Click="closeButton_Click" Visibility="Hidden" />
+        <TextBlock Text="Restaurant Des Fleurs Waitlist" FontSize="20" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Button Name="btnCust" Content="Open Guest List" Width="100" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" Click="custButton_Click" Visibility="Hidden" />
+        <Button Name="btnCustClose" Content="Close Guest List" Width="100" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" Click="custButtonClose_Click" Visibility="Hidden" />
+        <Label Name="attendeesLbl"  Content="Attendees: " FontSize="20" Grid.Column="4" Grid.Row="3" VerticalAlignment="Center" Margin="0,0,482,0" Visibility="Hidden" />
+        <Label Name="lineLabel" Content="In line: " FontSize="20" Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" Visibility="Hidden" />
+        <Label Name="inRestLabel" Content="In restaurant: " FontSize="20" Grid.Column="4" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="Hidden"/>
+        <Label Name="attendeesTotal" Content="0" Grid.Column="4" FontSize="20"  Grid.RowSpan="2" Grid.Row="3" Margin="100,0,448,210" Visibility="Hidden" />
+        <Label Name="restTotal" Content="0" Grid.Column="5" FontSize="20" Grid.Row="4" VerticalAlignment="Center" Visibility="Hidden" />
+        <Label Name="lineTotal" Content="0" Grid.Column="4" FontSize="20" Grid.Row="4" VerticalAlignment="Center" Margin="67,0,129,0" Visibility="Hidden" />
+    </Grid>
+</Window>
