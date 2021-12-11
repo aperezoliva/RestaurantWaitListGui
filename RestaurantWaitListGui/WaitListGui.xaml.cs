@@ -1,4 +1,22 @@
-﻿using System;
+﻿/**************************************************************
+* Name        : Wait List GUi
+* Author      : Alexander Perez Oliva
+* Created     : 12/10/2021
+* Course      : CIS 152 - Data Structures
+* Version     : 1.0
+* OS          : Windows 10
+* Copyright   : This is my own original work based on
+*               specifications issued by our instructor
+* Description : The final project, a waiting list gui which shows the amount of customers in line and the amount of customers in the restaurant
+*               Input:  starting the program
+*               Output: customerids sorted using an insertion sort, everything should be displayed to the user and have data structures working behind the scenes to get
+*               customer out queue into the restauarant, then have them leave the restaurant, the restaurant should have a max capacity set in place and won't increase until someone leaves
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or 
+* unmodified. I have not given other fellow student(s) access to
+* my program.         
+***************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -20,18 +38,20 @@ namespace RestaurantWaitListGui
     /// </summary>
     public partial class WaitListGui : Window
     {
-        private CustomerStorage custStorage = new CustomerStorage();
+        static CustomerStorage custStorage = new CustomerStorage();
         private Waitlist waitList = new Waitlist();
         private Restaurant restaurantOne = new Restaurant();
         private bool closeButtonWasClicked = false; // bool to check which buttons are clicked USED TO STOP A LOOP, IF NOT USED THE PROGRAM CRASHED WHILE RESTAURANT IS TRANSFERRING QUEUE TO LIST
         private int ranCustAmt;
         private int restaurantCap = 30; // cap of restaurant
+        public List<int> list = new List<int>(custStorage.custIdStorage);
 
+        public List<int> List { get => list; set => list = value; } // no matter WHAT i do  I can't make the listviewe display more than one item
 
         public WaitListGui()
         {
             InitializeComponent();
-            List<int> list = new List<int>(custStorage.custIdStorage);
+            
         }
 
         private async void openButton_Click(object sender, RoutedEventArgs e) //button handlers to open the restaurant and get the program going
@@ -59,10 +79,13 @@ namespace RestaurantWaitListGui
             {
                 customers.Add(new Customers { CustId = ranCustId, CustPriority = ranCustPriority });
                 custStorage.storeCustId(customers[i]);
+                
                 waitList.assignWaitList(customers[i]);
             }
 
 
+
+            list = custStorage.hashToList(list);
             attendeesTotal.Content = customers.Count.ToString();
             lineTotal.Content = waitList.WaitingQueue.Count.ToString();
 
@@ -148,9 +171,9 @@ namespace RestaurantWaitListGui
             btnCustClose.Visibility = Visibility.Visible;
             custList.Visibility = Visibility.Visible;
 
-            List<int> list = new List<int>(custStorage.custIdStorage);
-            
-           
+
+
+            InsertionSort(list);
 
             custList.ItemsSource = list;
         }
@@ -169,6 +192,24 @@ namespace RestaurantWaitListGui
             custList.Visibility = Visibility.Collapsed;
             btnCustClose.Visibility= Visibility.Collapsed;
 
+        }
+
+        public static void InsertionSort(List<int> listInput) // Decided to take this from an earlier project, I wanted to sort the list I have provided above
+        {
+
+            for (int i = 0; i < listInput.Count; i++)
+            {
+                int item = listInput[i];
+                int currentIndex = i;
+
+                while (currentIndex > 0 && listInput[currentIndex - 1] > item)
+                {
+                    listInput[currentIndex] = listInput[currentIndex - 1];
+                    currentIndex--;
+                }
+
+                listInput[currentIndex] = item;
+            }
         }
     }
 }

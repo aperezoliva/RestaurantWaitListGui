@@ -30,9 +30,9 @@ namespace RestaurantWaitListGui
             return custIdStorage.Add(cust.CustId); // Testing purposes
         }
 
-        public void hashToList(List<int> list)
+        public List<int> hashToList(List<int> list)
         {
-            list = custIdStorage.ToList();
+           return list = custIdStorage.ToList();
         }
     }
 }
